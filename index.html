@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PUBG UC SHOP</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#020617,#0f172a,#111827);
+color:white;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:450px;
+background:rgba(255,255,255,0.05);
+padding:25px;
+border-radius:22px;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.1);
+box-shadow:0 0 25px rgba(0,255,255,0.3);
+position:relative;
+overflow:hidden;
+}
+
+.crown{
+position:absolute;
+top:10px;
+right:15px;
+font-size:35px;
+cursor:pointer;
+}
+
+.logo{
+text-align:center;
+margin-bottom:20px;
+}
+
+.logo h1{
+font-size:32px;
+color:#00ffff;
+text-shadow:0 0 10px #00ffff;
+}
+
+.logo p{
+color:#cbd5e1;
+margin-top:5px;
+}
+
+label{
+display:block;
+margin-top:15px;
+margin-bottom:6px;
+font-size:14px;
+}
+
+input,select{
+width:100%;
+padding:13px;
+border:none;
+outline:none;
+border-radius:12px;
+background:#1e293b;
+color:white;
+font-size:15px;
+}
+
+.price-box{
+margin-top:15px;
+padding:15px;
+border-radius:12px;
+background:#0f172a;
+border:1px solid #00ffff;
+text-align:center;
+}
+
+.price{
+font-size:25px;
+font-weight:bold;
+color:#00ff99;
+margin-top:5px;
+}
+
+.jazzcash{
+margin-top:20px;
+padding:15px;
+border-radius:12px;
+background:#111827;
+border:1px solid #22c55e;
+text-align:center;
+}
+
+.jazzcash h2{
+color:#22c55e;
+margin-bottom:10px;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:20px;
+border:none;
+border-radius:12px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+color:black;
+}
+
+.pay-btn{
+background:linear-gradient(90deg,#00ffff,#00ff99);
+}
+
+.success{
+display:none;
+margin-top:18px;
+padding:15px;
+border-radius:12px;
+background:#052e16;
+border:1px solid #22c55e;
+text-align:center;
+color:#86efac;
+font-weight:bold;
+line-height:25px;
+}
+
+.admin-login{
+display:none;
+margin-top:20px;
+background:#0f172a;
+padding:15px;
+border-radius:15px;
+border:1px solid #38bdf8;
+}
+
+.admin-panel{
+display:none;
+margin-top:20px;
+background:#111827;
+padding:15px;
+border-radius:15px;
+border:1px solid #22c55e;
+}
+
+.order-box{
+background:#1e293b;
+padding:12px;
+border-radius:12px;
+margin-top:12px;
+line-height:28px;
+}
+
+.footer{
+margin-top:20px;
+text-align:center;
+font-size:12px;
+color:#94a3b8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="crown" onclick="showAdmin()">
+👑
+</div>
+
+<div class="logo">
+
+<h1>PUBG UC SHOP</h1>
+
+<p>Fast UC Purchase Pakistan</p>
+
+</div>
+
+<form onsubmit="submitOrder(event)">
+
+<label>PUBG UID</label>
+
+<input type="text" id="uid"
+placeholder="Enter PUBG UID" required>
+
+<label>Player Name</label>
+
+<input type="text" id="player"
+placeholder="Enter Player Name" required>
+
+<label>Sender Payment Name</label>
+
+<input type="text" id="sender"
+placeholder="Enter JazzCash Sender Name" required>
+
+<label>Select UC Package</label>
+
+<select id="uc" onchange="updatePrice()" required>
+
+<option value="">Select UC</option>
+
+<option value="60 UC - PKR 350">
+60 UC - PKR 350
+</option>
+
+<option value="120 UC - PKR 700">
+120 UC - PKR 700
+</option>
+
+<option value="325 UC - PKR 1600">
+325 UC - PKR 1600
+</option>
+
+<option value="660 UC - PKR 3200">
+660 UC - PKR 3200
+</option>
+
+<option value="1800 UC - PKR 6400">
+1800 UC - PKR 6400
+</option>
+
+</select>
+
+<div class="price-box">
+
+Selected Package
+
+<div class="price" id="price">
+No Package
+</div>
+
+</div>
+
+<div class="jazzcash">
+
+<h2>JazzCash Payment</h2>
+
+<p>Send Payment To</p>
+
+<h1>03245150474</h1>
+
+<p>Name: PUBG UC SHOP</p>
+
+</div>
+
+<button type="submit" class="pay-btn">
+PAYMENT OK
+</button>
+
+</form>
+
+<!-- USER MESSAGE -->
+
+<div class="success" id="userMessage">
+
+✅ PAYMENT SUCCESSFUL <br>
+
+PLEASE WAIT APPROVED ADMIN
+
+</div>
+
+<!-- ADMIN LOGIN -->
+
+<div class="admin-login" id="adminLogin">
+
+<h2 style="text-align:center;color:#38bdf8;">
+ADMIN LOGIN
+</h2>
+
+<input type="password"
+id="adminPass"
+placeholder="Enter Admin Password">
+
+<button onclick="loginAdmin()"
+style="background:linear-gradient(90deg,#38bdf8,#2563eb);">
+LOGIN
+</button>
+
+<div id="loginResult"
+style="margin-top:10px;text-align:center;">
+</div>
+
+</div>
+
+<!-- ADMIN PANEL -->
+
+<div class="admin-panel" id="adminPanel">
+
+<h2 style="text-align:center;color:#22c55e;">
+PAYMENT DETAILS
+</h2>
+
+<div class="order-box">
+
+<b>UID:</b>
+<span id="showUid">---</span>
+
+<br><br>
+
+<b>Player:</b>
+<span id="showPlayer">---</span>
+
+<br><br>
+
+<b>Sender Name:</b>
+<span id="showSender">---</span>
+
+<br><br>
+
+<b>UC Package:</b>
+<span id="showUc">---</span>
+
+<br><br>
+
+<b>Status:</b>
+
+<span id="statusText"
+style="color:#facc15;">
+WAITING APPROVAL
+</span>
+
+</div>
+
+<!-- ADMIN BUTTONS -->
+
+<button onclick="approvePayment()"
+style="
+background:linear-gradient(90deg,#22c55e,#16a34a);
+margin-top:15px;
+">
+
+APPROVE PAYMENT
+
+</button>
+
+<button onclick="ucDone()"
+style="
+background:linear-gradient(90deg,#38bdf8,#2563eb);
+margin-top:10px;
+">
+
+UC DONE
+
+</button>
+
+</div>
+
+<div class="footer">
+
+© 2026 PUBG UC SHOP
+
+</div>
+
+</div>
+
+<script>
+
+function updatePrice(){
+
+let uc =
+document.getElementById("uc").value;
+
+document.getElementById("price")
+.innerHTML = uc;
+
+}
+
+function submitOrder(e){
+
+e.preventDefault();
+
+document.getElementById("userMessage")
+.style.display="block";
+
+document.getElementById("showUid")
+.innerHTML =
+document.getElementById("uid").value;
+
+document.getElementById("showPlayer")
+.innerHTML =
+document.getElementById("player").value;
+
+document.getElementById("showSender")
+.innerHTML =
+document.getElementById("sender").value;
+
+document.getElementById("showUc")
+.innerHTML =
+document.getElementById("uc").value;
+
+}
+
+function showAdmin(){
+
+document.getElementById("adminLogin")
+.style.display="block";
+
+}
+
+function loginAdmin(){
+
+let pass =
+document.getElementById("adminPass").value;
+
+if(pass==="adminAHMED"){
+
+document.getElementById("loginResult")
+.innerHTML =
+"<span style='color:#22c55e;'>✅ LOGIN SUCCESSFUL</span>";
+
+document.getElementById("adminPanel")
+.style.display="block";
+
+}else{
+
+document.getElementById("loginResult")
+.innerHTML =
+"<span style='color:red;'>❌ WRONG PASSWORD</span>";
+
+}
+
+}
+
+function approvePayment(){
+
+document.getElementById("statusText")
+.innerHTML =
+"✅ PAYMENT APPROVED";
+
+document.getElementById("statusText")
+.style.color =
+"#22c55e";
+
+document.getElementById("userMessage")
+.innerHTML =
+"✅ PAYMENT APPROVED <br> PLEASE WAIT UC TRANSFER";
+
+}
+
+function ucDone(){
+
+document.getElementById("statusText")
+.innerHTML =
+"✅ UC SENT SUCCESSFULLY";
+
+document.getElementById("statusText")
+.style.color =
+"#38bdf8";
+
+document.getElementById("userMessage")
+.innerHTML =
+"🎉 YOU RECEIVED UC IN PUBG";
+
+}
+
+</script>
+
+</body>
+</html>
